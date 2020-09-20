@@ -1,10 +1,21 @@
-import Vue from 'vue'
-import App from './App.vue'
-import router from './router'
+import Vue from "vue";
+import App from "./App.vue";
+import router from "./router";
+import "./registerServiceWorker";
+import "./icons.js";
+import "./css/flexboxgrid.min.css";
 
-Vue.config.productionTip = false
+import CommandLayout from "./layouts/CommandLayout.vue";
+import ErrorLayout from "./layouts/ErrorLayout.vue";
+import MainLayout from "./layouts/MainLayout.vue";
+
+Vue.component("command-layout", CommandLayout);
+Vue.component("error-layout", ErrorLayout);
+Vue.component("main-layout", MainLayout);
+
+Vue.config.productionTip = false;
 
 new Vue({
   router,
-  render: h => h(App)
-}).$mount('#app')
+  render: (h) => h(App),
+}).$mount("#app");

@@ -1,32 +1,65 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+    <component :is="layout">
+      <router-view />
+    </component>
   </div>
 </template>
 
+<script>
+const default_layout = "main";
+export default {
+  components: {},
+  computed: {
+    layout() {
+      return (this.$route.meta.layout || default_layout) + "-layout";
+    },
+  },
+};
+</script>
+
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+body,
+html {
+  background-color: #637373;
+  height: 100%;
+  overflow-x: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif;
+}
+body {
+  margin: 0;
 }
 
-#nav {
-  padding: 30px;
+.header {
+  background-color: #679b9b;
+  height: 50px;
 }
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
+.footer {
+  background-color: #ff9a76;
+  height: 10px;
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  width: 100%;
 }
 
-#nav a.router-link-exact-active {
-  color: #42b983;
+.label-info {
+  color: white;
+}
+
+.label-info-sub {
+  color: #ffeadb;
+}
+
+.left-pane {
+  color: inherit;
+}
+.mid-pane {
+  color: inherit;
+}
+.right-pane {
+  color: inherit;
 }
 </style>
