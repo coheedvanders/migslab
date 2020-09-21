@@ -14,3 +14,9 @@ export default {
   name: "ErrorLayout",
 };
 </script>
+
+<style scoped>
+.error-layout {
+  text-align: center;
+}
+</style>

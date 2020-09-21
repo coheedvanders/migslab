@@ -62,4 +62,47 @@ body {
 .right-pane {
   color: inherit;
 }
+
+.align-left {
+  text-align: left;
+}
+
+.align-right {
+  text-align: right;
+}
+
+.align-center {
+  text-align: center;
+}
+
+.button-primary {
+  background-color: #ff9a76;
+  border: none;
+  color: white;
+  margin-left: 8px;
+  border-radius: 3px;
+  cursor: pointer;
+  text-decoration-line: unset;
+}
+
+.button-primary:hover {
+  background-color: #ffdfd4;
+  color: #ff9a76;
+  border: 1px solid #ff9a76;
+}
+
+.button-secondary {
+  background-color: transparent;
+  border: 1px solid #ff9a76;
+  color: #ff9a76;
+  margin-left: 8px;
+  border-radius: 3px;
+  cursor: pointer;
+  text-decoration-line: unset;
+}
+
+.button-secondary:hover {
+  background-color: gray;
+  color: #dadada;
+}
 </style>

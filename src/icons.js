@@ -19,6 +19,7 @@ import {
   faGlobeAsia,
   faGlobe,
   faFileSignature,
+  faBars,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
@@ -40,7 +41,8 @@ library.add(
   faPenNib,
   faGlobeAsia,
   faGlobe,
-  faFileSignature
+  faFileSignature,
+  faBars
 );
 
 Vue.component("fa-icon", FontAwesomeIcon);

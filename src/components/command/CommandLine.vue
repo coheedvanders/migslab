@@ -29,24 +29,27 @@
       <div v-else>
         $>
         <span
-          heref="activeCursor"
+          ref="cursor"
           class="terminal-input blinkcursor"
           type="text"
           v-text="inputVal"
           contenteditable
           @keyup="onEnter"
           @keydown.enter.prevent
+          @blur="focusCursor"
         ></span>
       </div>
     </div>
     <div v-if="type == 'output'" class="output">
+      <!-- help -->
       <div v-if="text == 'help'" class="label-info">
-        <div>
-          <fa-icon icon="quidditch" />dobby has come to answer your call for help
+        <div class="output-line">
+          <fa-icon class="icon" icon="quidditch" />dobby has come to answer your call for help
         </div>
-        <div>
-          <fa-icon icon="magic" />casting spell (displayamus commandus)
+        <div class="output-line">
+          <fa-icon class="icon" icon="magic" />casting spell (displayamus commandus)
         </div>
+        <div>please select a command:</div>
         <table>
           <tr
             class="help-item"
@@ -59,6 +62,66 @@
           </tr>
         </table>
       </div>
+      <!-- dev-info -->
+      <div v-if="text == 'explain dev-info'">
+        <div class="output-line">
+          <fa-icon class="icon" icon="quidditch" />about me
+        </div>
+        <div class="label-info">
+          <div>crafting software solutions since the rumored end of the earth (2012) lol</div>
+          <br />
+          <div>I'm a software developer with years of experience in the tech industry.</div>
+          <div>
+            well experienced in product development, solution designing, business process requirement gathering
+            and research and development
+          </div>
+          <br />
+
+          <div>worked extensively in Microsoft Dynamics Technologies such as CRM, NAV and GP.</div>
+          <div>
+            Involved and authored software solutions in Windows Forms, web applications, web API and
+            integration projects across multiple systems
+          </div>
+        </div>
+        <br />
+        <div class="output-line">
+          <fa-icon class="icon" icon="code" />programming language, framework and methodologies
+        </div>
+        <div class="label-info">
+          C$.Net, VB.Net, ASP, ASP MVC, MVC Web App, MVC Web API, Entity Framework, LINQ, T-SQL,
+          JAVA (Basics), jQuery,JavaScript, CSS, HTML, HTML5, Cside for Dynamics NAV, Dexterity for
+          Dynamics GP, XRM Framework, Bootstrap, C++, Waterfall, Agile, GIT, VUEJS, Blazor, Electron,
+          DotNet Core
+        </div>
+      </div>
+
+      <!-- services -->
+      <div v-if="text == 'explain services'">
+        <div class="output-line">
+          <fa-icon class="icon" icon="info" style="left: -15px;top: 3px;" />services offered
+        </div>
+        <div class="label-info">
+          <br />
+          <div>Consulting ( Project Based / Time and Material )</div>
+          <div>Custom web app development (progressive for mobile)</div>
+          <div>Website Development (No SEO)</div>
+          <div>Project Management</div>
+          <br />
+        </div>
+      </div>
+
+      <!-- site info -->
+      <div v-if="text == 'explain site'">
+        <div class="output-line">
+          <fa-icon class="icon" icon="info" style="left: -15px;top: 3px;" />about this site
+        </div>
+        <div class="label-info">
+          <div>Developed using VueJS and .Net Core API with Entity Framework, Dapper and MySQL</div>
+          <div>everything in here was written from scratch.</div>
+          <div>It's lightweight and no, I didn't use bootstrap :)</div>
+          <br />
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -68,6 +131,7 @@ export default {
   name: "CommandLine",
   data() {
     return {
+      id: Math.floor(Math.random() * Math.floor(5000)),
       inputVal: "",
       hasPressedEnter: false,
       commands: [
@@ -120,10 +184,7 @@ export default {
   },
   props: ["text", "type", "htmlLine"],
   mounted() {
-    console.log(this.inputVal, this.text);
-    if (this.type == "input" && this.text === "") {
-      this.$refs.activeCursor.focus();
-    }
+    this.focusCursor();
   },
   beforeUpdate() {
     console.log("beforeUpdate", this.inputVal, this.text, this.hasPressedEnter);
@@ -133,18 +194,23 @@ export default {
   },
   methods: {
     onEnter(event) {
-      console.log(event.key, event.key == "Enter");
-
       if (event.key == "Enter") {
         var src = event.target.innerText;
+        src = src == "" ? "nocommand" : src;
         this.inputVal = src;
         this.hasPressedEnter = true;
-        this.$emit("pressedEnterKey", event.target.innerText);
+        this.$emit("pressedEnterKey", src);
       }
     },
     onOptionSelected(code) {
-      console.log("onOptionSelected", code);
       this.$emit("pressedEnterKey", code);
+    },
+    focusCursor() {
+      console.log("focusCursor", this.id, this.$refs.cursor);
+      if (this.$refs.cursor) {
+        // this.$refs.activeCursor.focus();
+        this.$refs.cursor.focus();
+      }
     },
   },
   computed: {
@@ -158,7 +224,16 @@ export default {
 
 <style scoped>
 .cli-wrapper {
-  padding: 0 11px 0px 113px;
+  padding: 0 11px 0px 1rem;
+}
+
+.output-line {
+  position: relative;
+}
+.output-line .icon {
+  position: absolute;
+  left: -25px;
+  top: 7px;
 }
 
 .terminal-input {
@@ -173,7 +248,7 @@ export default {
   padding-left: 6px;
 }
 
-.blinkcursor {
+.terminal-input:focus {
   animation: blinkcursor 0.5s step-end infinite alternate;
 }
 
@@ -188,6 +263,9 @@ export default {
   text-decoration-line: unset;
 }
 
+table {
+  margin-left: 20px;
+}
 .help-item {
   cursor: pointer;
 }
@@ -204,6 +282,6 @@ export default {
 }
 
 .output {
-  padding: 5px 5px 5px 1rem;
+  padding: 5px 5px 5px 1.5rem;
 }
 </style>
